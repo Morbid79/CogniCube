@@ -1,0 +1,19 @@
+[project]
+name = "CogniCube_backend"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "XuChenXu", email = "91937041+ChenXu233@users.noreply.github.com"},
+]
+dependencies = ["fastapi>=0.115.8"]
+requires-python = ">=3.12"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+
+[tool.pdm]
+distribution = true

@@ -1,6 +1,10 @@
 # 说明
 
-后端基于FastAPI开发。
+后端基于FastAPI+pdm开发。
+
+相关的文档如下：
+- [FastAPI](https://fastapi.tiangolo.com/)
+- [pdm](https://pdm.fming.dev/)
 
 ## 使用流程
 

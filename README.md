@@ -191,3 +191,46 @@ APP 具备强大的情境感知能力，通过获取用户的位置信息（如�
 ### 场外信息扩展
 
 在充分保障用户隐私的前提下，接入第三方的信息资料库，整合更多元、丰富的心理健康资料。这些资料将涵盖不同领域、不同视角的心理健康知识，为用户提供更全面的学习资源，助力他们更好地了解和管理自己的情绪
+
+```mermaid
+graph TD
+    A[emocube_backend] --> B[app]
+    A --> C[requirements.txt]
+    A --> D[main.py]
+    A --> E[.env]
+    A --> F[static]
+    A --> G[docs]
+    A --> H[tests]
+    
+    B --> I[routers]
+    B --> J[models]
+    B --> K[schemas]
+    B --> L[dependencies]
+    B --> M[services]
+    B --> N[core]
+    B --> O[database.py]
+    
+    I --> P[auth.py]
+    I --> Q[chat.py]
+    I --> R[cbt.py]
+    I --> S[context.py]
+    I --> T[data.py]
+    I --> U[privacy.py]
+    
+    J --> V[db_models.py]
+    
+    K --> W[user.py]
+    K --> X[emotion.py]
+    
+    L --> Y[auth.py]
+    
+    M --> Z[emotion_analysis.py]
+    M --> AA[ai_services.py]
+    
+    N --> AB[config.py]
+    N --> AC[security.py]
+    N --> AD[middlewares.py]
+    
+    H --> AE[test_auth.py]
+    H --> AF[test_chat.py]
+```

@@ -5,7 +5,7 @@ description = "Default template for PDM package"
 authors = [
     {name = "XuChenXu", email = "91937041+ChenXu233@users.noreply.github.com"},
 ]
-dependencies = ["fastapi>=0.115.8"]
+dependencies = ["fastapi>=0.115.8", "uvicorn>=0.34.0"]
 requires-python = ">=3.12"
 readme = "README.md"
 license = {text = "MIT"}
@@ -17,3 +17,6 @@ build-backend = "setuptools.build_meta"
 
 [tool.pdm]
 distribution = true
+
+[tool.pdm.scripts]
+start = "pdm run app.py"

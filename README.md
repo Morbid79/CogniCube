@@ -1,3 +1,8 @@
+<div align="center">
+
+  <img src="./docs/logo/CogniCube.svg" width="200" height="200" alt="cover" />
+</div>
+
 # 情绪立方——基于CBT疗法与AI辅助心理健康APP
 
 [点我前往使用文档](./docs/README.md)

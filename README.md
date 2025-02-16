@@ -35,7 +35,7 @@
   - [五、产品技术路线](#五产品技术路线)
     - [5.1 技术架构全景图](#51-技术架构全景图)
     - [5.2 前后端技术栈说明](#52-前后端技术栈说明)
-      - [5.2.1 前端](#521-前端)
+      - [5.2.1 前端（Flutter版本）](#521-前端flutter版本)
       - [5.2.1 后端](#521-后端)
     - [5.3 其他技术栈](#53-其他技术栈)
     - [5.4 实验性代码展示](#54-实验性代码展示)
@@ -299,15 +299,15 @@ flowchart LR
 
 ### 5.2 前后端技术栈说明
 
-#### 5.2.1 前端
+#### 5.2.1 前端（Flutter版本）
 
-前端将会使用`React`与`React Native`框架
+前端将使用`Flutter`跨平台框架
 
-- **项目初始化**：使用Create React App和Expo CLI分别初始化Web和移动端的React与React Native项目。
-- **UI组件开发**：根据设计稿，使用React和React Native的组件库（如Ant Design Mobile、React Navigation等）开发用户界面，包括拟人化AI对话界面、CBT干预工具界面、智能EMA守护系统界面和数据可视化界面。
-- **状态管理**：采用Redux或MobX进行全局状态管理，确保应用在不同页面和组件间的数据同步。
-- **API请求**：使用Axios或Fetch API与后端进行数据交互，实现用户信息的获取、AI对话内容的发送与接收、CBT训练结果的提交等功能。
-- **多平台适配**：利用React Native的跨平台特性，通过条件编译和平台特定代码实现Web、iOS和Android平台的一致性体验。
+- **项目初始化**：通过flutter create命令初始化项目，配置Android/iOS/Web多平台支持，集成flutter_lints规范代码质量。
+- **Widget开发**：基于Material Design/Cupertino风格组件构建界面，结合flutter_hooks、go_router实现动态路由，使用flutter_svg渲染矢量图形，开发包含AI对话气泡、EMA数据图表、CBT交互式控件的自适应布局。
+- **状态管理**：采用Riverpod或Bloc进行状态管理，结合freezed实现不可变数据模型，通过StateNotifier管理AI对话会话状态、EMA数据流等复杂业务逻辑。
+- **API交互**：使用Dio库封装REST Client，配合retrofit自动生成API调用代码，实现Token自动刷新、请求重试等机制，通过json_serializable处理模型序列化。
+- **跨平台适配**：利用Flutter平台通道（Platform Channel）对接原生功能，通过universal_io统一网络请求，使用responsive_framework实现多设备尺寸适配，编译生成iOS/Android/Web三端应用。
 
 #### 5.2.1 后端
 

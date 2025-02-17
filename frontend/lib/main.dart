@@ -7,13 +7,13 @@ void main() {
   runApp(
     ChangeNotifierProvider(
       create: (_) => ChatViewModel(),
-      child: const ChatApp(),
+      child: const App(),
     ),
   );
 }
 
-class ChatApp extends StatelessWidget {
-  const ChatApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
-from models.user import User
-from services.email_service import send_verification_email
-from services.gsheet_service import add_user_to_sheet
+from src.cognicube_backend.models.user import User
+from src.cognicube_backend.services.email_service import send_verification_email
+from src.cognicube_backend.services.gsheet_service import add_user_to_sheet
 
 router = APIRouter()
 

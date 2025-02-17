@@ -1,16 +1,17 @@
-from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
+from pydantic import SecretStr
+from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
 
 # 邮件服务器配置
 mail_config = ConnectionConfig(
     MAIL_USERNAME="cognicubeorg@gmail.com",
-    MAIL_PASSWORD="ayau ktnx vpiy nigb",
+    MAIL_PASSWORD=SecretStr("ayau ktnx vpiy nigb"),
     MAIL_FROM="cognicubeorg@gmail.com",
     MAIL_PORT=587,
     MAIL_SERVER="smtp.gmail.com",
     MAIL_FROM_NAME="CogniCube Team",
-    MAIL_TLS=True,
-    MAIL_SSL=False,
-    USE_CREDENTIALS=True
+    USE_CREDENTIALS=True,
+    MAIL_STARTTLS=True,  # 添加这行
+    MAIL_SSL_TLS=False  # 添加这行
 )
 
 async def send_verification_email(email: str):
@@ -19,7 +20,7 @@ async def send_verification_email(email: str):
         subject="Email Verification",
         recipients=[email],
         body="Thank you for registering. Please verify your email.",
-        subtype="html"
+        subtype=MessageType.html
     )
     fm = FastMail(mail_config)
     await fm.send_message(message)

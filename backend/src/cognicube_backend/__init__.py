@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .apis.v1.auth import router
+from src.cognicube_backend.apis.v1.auth import router
 
 APP = FastAPI()
 

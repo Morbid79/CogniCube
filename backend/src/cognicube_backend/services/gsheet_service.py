@@ -5,7 +5,7 @@ def get_gsheet_client():
     """获取Google Sheets客户端"""
     scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
     creds = Credentials.from_service_account_file('your-google-creds.json', scopes=scope)
-    return gspread.authorize(creds)
+    return gspread.auth.authorize(creds)
 
 def add_user_to_sheet(email: str):
     """将用户添加到Google Sheet"""

@@ -304,9 +304,13 @@ flowchart LR
 前端将使用`Flutter`跨平台框架
 
 - **项目初始化**：通过flutter create命令初始化项目，配置Android/iOS/Web多平台支持，集成flutter_lints规范代码质量。
+
 - **Widget开发**：基于Material Design/Cupertino风格组件构建界面，结合flutter_hooks、go_router实现动态路由，使用flutter_svg渲染矢量图形，开发包含AI对话气泡、EMA数据图表、CBT交互式控件的自适应布局。
+
 - **状态管理**：采用Riverpod或Bloc进行状态管理，结合freezed实现不可变数据模型，通过StateNotifier管理AI对话会话状态、EMA数据流等复杂业务逻辑。
+
 - **API交互**：使用Dio库封装REST Client，配合retrofit自动生成API调用代码，实现Token自动刷新、请求重试等机制，通过json_serializable处理模型序列化。
+
 - **跨平台适配**：利用Flutter平台通道（Platform Channel）对接原生功能，通过universal_io统一网络请求，使用responsive_framework实现多设备尺寸适配，编译生成iOS/Android/Web三端应用。
 
 #### 5.2.1 后端
@@ -314,9 +318,13 @@ flowchart LR
 前端将会使用`Python`与`FastAPI`框架
 
 - **项目结构**：采用FastAPI的官方项目模板，搭建清晰、模块化的后端项目结构。
+
 - **数据库设计**：使用SQLite或PostgreSQL等关系型数据库存储用户信息、对话记录、CBT训练结果等数据。同时，设计合理的表结构和索引，以提高数据查询和操作效率。
+
 - **API接口开发**：根据前端需求，开发RESTful风格的API接口，包括用户认证、AI对话处理、CBT训练结果提交和数据可视化数据获取等功能。利用FastAPI的自动文档生成功能（如Swagger UI或ReDoc），方便前端开发者进行接口调试和测试。
+
 - **异步处理**：利用FastAPI的异步编程特性（如Asyncio和Async/Await），实现高效的并发处理和资源利用。对于耗时的操作（如AI对话模型的推理），可以采用Celery等异步任务队列进行后台处理。
+
 - **安全性**：采用HTTPS协议保障数据传输的安全性；使用JWT（JSON Web Token）进行用户认证和授权；对敏感数据进行加密存储和传输（如AES或RSA加密算法）。
 
 ### 5.3 其他技术栈

@@ -245,3 +245,5 @@ frontend/.gradle
 backend/__pycache__/
 backend/.venv/*
 backend/.pdm-python
+
+.vscode/

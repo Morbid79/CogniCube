@@ -16,4 +16,4 @@ async def register_user(user: User):
 
         return {"message": "Verification email sent."}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Registration failed: {e}")
+        raise HTTPException(status_code=500, detail=f"Registration failed: {e}") from e

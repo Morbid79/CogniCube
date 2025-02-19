@@ -280,7 +280,7 @@ graph TD
 ```mermaid
 flowchart LR
     subgraph 移动端
-        A[React Native] --> B[传感器集成]
+        A[flutter] --> B[传感器集成]
         A --> C[跨平台渲染]
     end
     subgraph 服务端

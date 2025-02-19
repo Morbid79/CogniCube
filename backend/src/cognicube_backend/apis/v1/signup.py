@@ -22,4 +22,4 @@ async def signup_user(user: UserCreate, db: Session = Depends(SessionLocal)):
 
         return {"user_id": str(user_in_db.id)}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Registration failed: {e}")
+        raise HTTPException(status_code=500, detail=f"Registration failed: {e}") from e

@@ -1,14 +1,15 @@
 from pydantic import SecretStr
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
+from .. import CONFIG
 
 # 邮件服务器配置
 mail_config = ConnectionConfig(
-    MAIL_USERNAME="cognicubeorg@gmail.com",
-    MAIL_PASSWORD=SecretStr("ayau ktnx vpiy nigb"),
-    MAIL_FROM="cognicubeorg@gmail.com",
+    MAIL_USERNAME=CONFIG.MAIL_USERNAME,
+    MAIL_PASSWORD=CONFIG.MAIL_PASSWORD,
+    MAIL_FROM=CONFIG.MAIL_FROM,
     MAIL_PORT=587,
     MAIL_SERVER="smtp.gmail.com",
-    MAIL_FROM_NAME="CogniCube Team",
+    MAIL_FROM_NAME=CONFIG.MAIL_FROM_NAME,
     USE_CREDENTIALS=True,
     MAIL_STARTTLS=True,  # 添加这行
     MAIL_SSL_TLS=False  # 添加这行

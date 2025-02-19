@@ -1,14 +1,27 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, EmailStr, constr
+from typing import Optional
+from datetime import datetime
+import re
 
-class UserBase(BaseModel):
-    username: str = Field(..., description="User id")
-    password: str = Field(..., description="User password")
-    email: str = Field(..., description="User email")
-    created_at: str = Field(..., description="User creation date")
-    email_verified: bool = Field(False, description="Email verification status")
+# 密码正则表达式    # 至少6位，包含字母和数字
+password_regex = r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$'
 
-class User(UserBase):
-    id: int = Field(..., description="User id")
+# 用户注册请求模型
+class UserCreate(BaseModel):
+    username: str = Field(..., min_length=3, max_length=20, description="User's unique username")
+    password: str = Field(..., min_length=6, description="User password (hashed later)")
+    email: EmailStr = Field(..., description="User's email address")
+
+# 数据库中的用户模型（带ID和时间戳）
+class UserInDB(UserCreate):
+    id: int = Field(..., description="Unique user ID")
+    created_at: datetime = Field(default_factory=datetime.datetime.utcnow, description="User creation timestamp")
+    email_verified: bool = Field(default=False, description="Email verification status")
 
     class Config:
         orm_mode = True
+
+# 仅用于邮箱验证的模型
+class UserEmail(BaseModel):
+    email: EmailStr = Field(..., description="User email for verification purposes")
+

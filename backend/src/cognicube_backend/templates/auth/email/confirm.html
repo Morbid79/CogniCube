@@ -1,0 +1,8 @@
+<p>亲爱的 {{ user.username }}，</p>
+<p>感谢您注册<b>情绪立方</b>！</p>
+<p>请点击以下链接确认您的账户：<a href="{{ url_for('verify', token=token, _external=True) }}">点击这里</a>。</p>
+<p>或者，您可以将以下链接复制到浏览器的地址栏中：</p>
+<p>{{ url_for('verify', token=token, _external=True) }}</p>
+<p>此致，</p>
+<p>情绪立方 团队</p>
+<p><small>注意：此邮箱地址不接收回复。</small></p>

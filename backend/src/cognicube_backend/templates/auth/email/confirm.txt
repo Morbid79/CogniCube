@@ -1,0 +1,6 @@
+亲爱的{{ user.username }}：
+    感谢您注册情绪立方！
+    请点击以下链接确认您的账户：{{ url_for('auth.confirm', token=token, _external=True) }}
+此致，
+情绪立方团队
+注意：此邮箱地址不接收回复。

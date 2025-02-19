@@ -7,6 +7,7 @@ class Setting(BaseSettings):
     MAIL_PASSWORD: str
     MAIL_FROM: str
     MAIL_FROM_NAME: str
+    USER_DB_PATH: str = "./databases/test_user.db"
 
     class Config:
         """读取配置文件"""

@@ -1,10 +1,8 @@
-from jinja2 import Environment, FileSystemLoader
+from fastapi import Request
 from pydantic import SecretStr
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
-from .. import CONFIG
+from cognicube_backend.config import CONFIG
 
-# 配置模板环境
-template_env = Environment(loader=FileSystemLoader("./templates/auth/email"))  # 模板文件所在的目录
 
 # 邮件服务器配置
 mail_config = ConnectionConfig(
@@ -19,12 +17,12 @@ mail_config = ConnectionConfig(
     MAIL_SSL_TLS=False  # 添加这行
 )
 
-async def send_verification_email(email: str, username: str,
+async def send_verification_email(request:Request, email: str,
                                   verification_token: str):
     """发送电子邮件验证码"""
-    # 加载模板
-    template = template_env.get_template("confirm.txt")
-    body = template.render(username = username, token = verification_token)
+    # 使用 FastAPI 的 url_for 生成验证链接
+    verification_url = request.url_for("verify_email", token=verification_token)
+    body = f"Please verify your email by clicking the following link: {verification_url}"
     message = MessageSchema(
         subject="Email Verification",
         recipients=[email],

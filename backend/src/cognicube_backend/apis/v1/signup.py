@@ -31,7 +31,7 @@ async def signup_user(request:Request,
 
         # 创建用户
         user_in_db = create_user(db, user.username, user.email,
-                                 user.password_hash,
+                                 user.password,
                                  verfication_token,
                                  token_expiry)
 

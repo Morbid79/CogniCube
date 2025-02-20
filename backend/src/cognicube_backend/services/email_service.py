@@ -22,6 +22,9 @@ async def send_verification_email(request:Request, email: str,
     """发送电子邮件验证码"""
     # 使用 FastAPI 的 url_for 生成验证链接
     verification_url = request.url_for("verify_email", token=verification_token)
+
+    print(f"Verification URL: {verification_url}")
+
     body = f"Please verify your email by clicking the following link: {verification_url}"
     message = MessageSchema(
         subject="Email Verification",

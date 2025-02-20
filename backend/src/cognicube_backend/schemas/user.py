@@ -12,6 +12,16 @@ class UserCreate(BaseModel):
     email: str
     password: str
 
+    @field_validator("username")
+    @classmethod
+    def validate_username(cls, value):
+        """验证用户名合法性"""
+        if 3 < len(value) < 20:
+            raise ValueError("Username must be at least 3 characters long and at most 20 characters long")
+        if not value.isalnum():
+            raise ValueError("Username must contain only alphanumeric characters")
+        return value
+
     @field_validator("email")
     @classmethod
     def validate_email(cls, value):
@@ -24,28 +34,19 @@ class UserCreate(BaseModel):
     @classmethod
     def validate_password(cls, value):
         """验证密码强度"""
-        if len(value) < 8:
-            raise ValueError("Password must be at least 8 characters long")
-        if re.search(r"[A-Z]", value) is None:
-            raise ValueError("Password must contain at least one uppercase letter")
-        if re.search(r"[a-z]", value) is None:
-            raise ValueError("Password must contain at least one lowercase letter")
+        if len(value) < 6:
+            raise ValueError("Password must be at least 6 characters long")
+        if re.search(r"[a-zA-Z]", value) is None:
+            raise ValueError("Password must contain at least one letter")
         if re.search(r"[0-9]", value) is None:
             raise ValueError("Password must contain at least one digit")
         return value
 
 class UserLogin(BaseModel):
     """用户登录模型"""
-    email: str
+    username: str
     password: str
 
-    @field_validator("email")
-    @classmethod
-    def validate_email(cls, value):
-        """验证邮箱格式"""
-        if re.match(r"[^@]+@[^@]+\.[^@]+", value) is None:
-            raise ValueError("Invalid email format")
-        return value
 
 
 class UserResponse(BaseModel):

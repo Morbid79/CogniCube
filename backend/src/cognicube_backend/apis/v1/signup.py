@@ -12,7 +12,7 @@ from cognicube_backend.services.gsheet_service import add_user_to_sheet
 from cognicube_backend.databases.user_database import  get_db
 from cognicube_backend.models.user import User, create_user
 
-signup = APIRouter(prefix="/apis/v1/signup")
+signup = APIRouter(prefix="/apis/v1/auth")
 
 @signup.post("/register")
 async def signup_user(request:Request,

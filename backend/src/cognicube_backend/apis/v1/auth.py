@@ -14,7 +14,7 @@ async def read_root():
 
 @auth.post("/login")
 async def login(user: UserLogin, db: Session = Depends(get_db)):
-    user_db = db.query(User).filter(User.email == user.email).first()
+    user_db = db.query(User).filter(User.username == user.username).first()
     if not user_db:
         raise HTTPException(status_code=404, detail="User not found")
     if not user_db.verify_password(user.password):

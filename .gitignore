@@ -247,3 +247,4 @@ backend/.venv/*
 backend/.pdm-python
 
 .vscode/
+backend/tests/databases/

@@ -9,6 +9,7 @@ class Setting(BaseSettings):
     MAIL_PORT: int = 465
     MAIL_FROM: str
     USER_DB_URL: str = "sqlite:///./tests/databases/test_user.db"
+    JWT_SECRET_KEY: str
 
     class Config:
         """读取配置文件"""

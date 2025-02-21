@@ -59,3 +59,8 @@ class UserResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class TokenResponse(BaseModel):
+    """Token响应模型"""
+    access_token: str
+    user_id:int

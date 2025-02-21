@@ -40,8 +40,8 @@
 
 |参数|类型|描述|
 |---|---|---|
-|access_token|string|有效期2小时的JWT访问令牌|
-|refresh_token|string|有效期7天的JWT刷新令牌|
+|user_id|string|用户唯一标识符|
+|access_token|string|有效期一天的JWT访问令牌|
 **示例请求**:
 ```json
 {
@@ -57,7 +57,7 @@
 
 |参数|类型|必填|描述|
 |---|---|---|---|
-|refresh_token|string|是|有效的JWT刷新令牌|
+|access_token|string|是|有效的JWT访问令牌|
 
 **返回参数**:
 

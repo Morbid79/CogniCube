@@ -1,7 +1,7 @@
 from datetime import datetime, UTC
 
-from sqlalchemy import Column, Integer, String, Boolean, DateTime
-from sqlalchemy.orm import Session
+from sqlalchemy import  Integer, String, Boolean, DateTime
+from sqlalchemy.orm import Session, mapped_column, Mapped
 from cognicube_backend.databases.user_database import Base
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -9,14 +9,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 class User(Base):
     """数据库中的User模型"""
     __tablename__ = "users"
-    id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, unique=True, index=True)
-    email = Column(String, unique=True, index=True)
-    password_hash = Column(String)
-    is_verified = Column(Boolean, default=False)
-    verification_token = Column(String, index=True)
-    verification_token_expiry = Column(DateTime(timezone=True))
-    created_on = Column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    username: Mapped[str] = mapped_column(String, unique=True, index=True)
+    email: Mapped[str] = mapped_column(String, unique=True, index=True)
+    password_hash: Mapped[str] = mapped_column(String)
+    is_verified: Mapped[bool] = mapped_column(Boolean, default=False)
+    verification_token: Mapped[str|None] = mapped_column(String, index=True)
+    verification_token_expiry: Mapped[datetime|None] = mapped_column(DateTime(timezone=True))
+    created_on: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
 
     @property
     def password(self):

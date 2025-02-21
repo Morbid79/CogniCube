@@ -8,10 +8,7 @@ from sqlalchemy.orm import sessionmaker
 from cognicube_backend.config import CONFIG
 
 
-USER_DB_PATH = CONFIG.USER_DB_PATH
-SQLALCHEMY_DATABASE_URL = f"sqlite:///{USER_DB_PATH}"
-
-engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
+engine = create_engine(CONFIG.USER_DB_URL, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()

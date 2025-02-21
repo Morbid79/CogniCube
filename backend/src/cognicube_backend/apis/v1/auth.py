@@ -10,7 +10,7 @@ auth = APIRouter(prefix="/apis/v1/auth")
 
 @auth.get("/")
 async def read_root():
-    return {"Hello": "World"}
+    return "please don't use this endpoint"
 
 @auth.post("/login")
 async def login(user: UserLogin, db: Session = Depends(get_db)):

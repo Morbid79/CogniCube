@@ -1,14 +1,12 @@
 import uuid
-from datetime import datetime, timedelta, UTC
+from datetime import datetime, timedelta, UTC, timezone
 import traceback
 
 from fastapi import APIRouter, HTTPException, Depends, Request
 from sqlalchemy.orm import Session
-import pytz
 
 from cognicube_backend.schemas.user import UserCreate
 from cognicube_backend.services.email_service import send_verification_email
-from cognicube_backend.services.gsheet_service import add_user_to_sheet
 from cognicube_backend.databases.user_database import  get_db
 from cognicube_backend.models.user import User, create_user
 
@@ -54,8 +52,11 @@ async def verify_email(token: str, db: Session = Depends(get_db)):
 
     if not db_user:
         raise HTTPException(status_code=400, detail="Invalid or expired verification token")
+    
+    if db_user.verification_token_expiry is None:
+        raise HTTPException(status_code=400, detail="Token expiry time missing")
 
-    token_expiry_with_tz = db_user.verification_token_expiry.replace(tzinfo=pytz.UTC)
+    token_expiry_with_tz = db_user.verification_token_expiry.replace(tzinfo=timezone.utc)
 
     # 检查是否已经过期
     if token_expiry_with_tz < datetime.now(UTC):
@@ -65,7 +66,6 @@ async def verify_email(token: str, db: Session = Depends(get_db)):
     db_user.is_verified = True
     db_user.verification_token = None  # 将token移除
     db_user.verification_token_expiry = None  # 将token过期时间移除
-    db.add(db_user)
     db.commit()
 
     return {"message": "Email verified successfully", "username": db_user.username}

@@ -7,7 +7,7 @@ class Setting(BaseSettings):
     MAIL_PASSWORD: str
     MAIL_FROM: str
     MAIL_FROM_NAME: str
-    USER_DB_PATH: str = "./tests/databases/test_user.db"
+    USER_DB_URL: str = "sqlite:///./tests/databases/test_user.db"
 
     class Config:
         """读取配置文件"""
@@ -16,6 +16,6 @@ class Setting(BaseSettings):
 @lru_cache
 def get_config():
     """返回设置对象，且保证只读取一次"""
-    return Setting()
+    return Setting() # type: ignore
 
 CONFIG = get_config()

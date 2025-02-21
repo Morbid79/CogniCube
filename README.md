@@ -57,7 +57,7 @@
 
 | 角色    | 职责范围        | 技术栈                           |
 | ----- | ----------- | ----------------------------- |
-| 前端开发  | 前端功能实现      | JavaScript/React+React Native |
+| 前端开发  | 前端功能实现      | Dart/Flutter |
 | AI工程师 | 模型微调、对话系统开发 | Python/Pytorch                |
 | 后端开发  | 后端功能实现      | Python/FastAPI                |
 

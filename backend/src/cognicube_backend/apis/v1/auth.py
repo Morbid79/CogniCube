@@ -6,7 +6,7 @@ from cognicube_backend.schemas.user import UserLogin
 from cognicube_backend.databases.user_database import  get_db
 from cognicube_backend.models.user import User
 from cognicube_backend.schemas.user import TokenResponse
-from cognicube_backend.utils.jwt import create_jwt_token
+from cognicube_backend.utils.jwt import create_jwt_token, get_jwt_token_user_id
 
 auth = APIRouter(prefix="/apis/v1/auth")
 
@@ -25,7 +25,7 @@ async def login(user: UserLogin, db: Session = Depends(get_db)):
     
     # 生成访问令牌
     access_token = create_jwt_token(
-        {"sub": user.username, "type": "access"},
+        {"sub": user_db.id, "type": "access"},
         timedelta(days=1)
     )
     
@@ -33,4 +33,21 @@ async def login(user: UserLogin, db: Session = Depends(get_db)):
         "user_id": user_db.id,
         "access_token": access_token,
     }
- 
+
+@auth.post("/refresh")
+# 定义一个异步函数refresh，用于刷新用户的访问令牌
+async def refresh(user_id: int = Depends(get_jwt_token_user_id)):
+
+    access_token = create_jwt_token(
+        {"sub": user_id, "type": "access"},
+        timedelta(days=1)
+    )
+
+    # 返回一个字典，包含用户ID和新的访问令牌
+    return {
+        "user_id": user_id,
+        "access_token": access_token,
+    }
+
+    
+    

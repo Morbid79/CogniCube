@@ -47,8 +47,6 @@ class UserLogin(BaseModel):
     username: str
     password: str
 
-
-
 class UserResponse(BaseModel):
     """用户响应模型"""
     id: int

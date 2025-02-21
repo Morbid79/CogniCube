@@ -39,7 +39,7 @@ def get_user(db: Session, user_id: int):
 def create_user(db: Session, username: str, email: str,
                 password: str, verification_token: str,
                 token_expiry: datetime
-                ):
+                )-> User:
     """创建用户"""
     user = User(username=username, email=email,
                 password=password,

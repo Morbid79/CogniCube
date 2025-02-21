@@ -5,8 +5,9 @@ class Setting(BaseSettings):
     """读取环境变量"""
     MAIL_USERNAME: str
     MAIL_PASSWORD: str
+    MAIL_SERVER: str = "smtp.qq.com"
+    MAIL_PORT: int = 465
     MAIL_FROM: str
-    MAIL_FROM_NAME: str
     USER_DB_URL: str = "sqlite:///./tests/databases/test_user.db"
 
     class Config:

@@ -16,7 +16,7 @@ class UserCreate(BaseModel):
     @classmethod
     def validate_username(cls, value):
         """验证用户名合法性"""
-        if 3 < len(value) < 20:
+        if not (3 < len(value) < 20):
             raise ValueError("Username must be at least 3 characters long and at most 20 characters long")
         if not value.isalnum():
             raise ValueError("Username must contain only alphanumeric characters")

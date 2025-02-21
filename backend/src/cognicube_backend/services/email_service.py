@@ -3,18 +3,18 @@ from pydantic import SecretStr
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
 from cognicube_backend.config import CONFIG
 
+import traceback
 
 # 邮件服务器配置
 mail_config = ConnectionConfig(
     MAIL_USERNAME=CONFIG.MAIL_USERNAME,
     MAIL_PASSWORD=SecretStr(CONFIG.MAIL_PASSWORD),
     MAIL_FROM=CONFIG.MAIL_FROM,
-    MAIL_PORT=587,
-    MAIL_SERVER="smtp.gmail.com",
-    MAIL_FROM_NAME=CONFIG.MAIL_FROM_NAME,
+    MAIL_PORT=CONFIG.MAIL_PORT,
+    MAIL_SERVER=CONFIG.MAIL_SERVER,
     USE_CREDENTIALS=True,
-    MAIL_STARTTLS=True,  # 添加这行
-    MAIL_SSL_TLS=False  # 添加这行
+    MAIL_STARTTLS=False,  # 添加这行
+    MAIL_SSL_TLS=True  # 添加这行
 )
 
 async def send_verification_email(request:Request, email: str,
@@ -33,5 +33,9 @@ async def send_verification_email(request:Request, email: str,
         subtype=MessageType.html
     )
     fm = FastMail(mail_config)
-    await fm.send_message(message)
+    try:
+        await fm.send_message(message)
+    except Exception as e:
+        traceback.print_exc()
+        print(f"Failed to send verification email to {email}: {e}")
     print(f"Verification email sent to {email}.")

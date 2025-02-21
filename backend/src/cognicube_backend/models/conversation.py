@@ -2,7 +2,7 @@ from datetime import datetime, UTC
 from enum import Enum
 from sqlalchemy import  Integer, String, DateTime
 from sqlalchemy.orm import mapped_column, Mapped
-from cognicube_backend.databases.user_database import Base
+from cognicube_backend.databases.conversation_database import Base
 
 class Who(Enum):
     USER = "User"

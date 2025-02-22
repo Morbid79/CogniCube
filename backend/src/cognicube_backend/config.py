@@ -8,8 +8,9 @@ class Setting(BaseSettings):
     MAIL_SERVER: str = "smtp.qq.com"
     MAIL_PORT: int = 465
     MAIL_FROM: str
+    MAIL_FROM_NAME: str
     USER_DB_URL: str = "sqlite:///./tests/databases/test_user.db"
-    JWT_SECRET_KEY: str
+    JWT_SECRET_KEY: str = "secret"
     CON_DB_URL: str =  "sqlite:///./tests/databases/test_conversation.db"
 
     class Config:

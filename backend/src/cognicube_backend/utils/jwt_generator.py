@@ -1,8 +1,7 @@
 from datetime import datetime, timedelta, timezone
 from fastapi import HTTPException
 
-from jose import jwt
-from jose.exceptions import ExpiredSignatureError,JWTError
+import jwt
 
 from cognicube_backend.config import CONFIG
 
@@ -14,13 +13,13 @@ def create_jwt_token(data: dict, expires_delta: timedelta) -> str:
     return jwt.encode(to_encode, CONFIG.JWT_SECRET_KEY, algorithm="HS256")
 
 def decode_jwt_token(token: str) -> dict:
-    """解码WT令牌"""
+    """解码JWT令牌"""
     try:
-        info = jwt.decode(token, CONFIG.JWT_SECRET_KEY, algorithms=["HS256"])
+        info = jwt.decode(token, CONFIG.JWT_SECRET_KEY, algorithms="HS256")
 
-    except ExpiredSignatureError:
+    except jwt.ExpiredSignatureError:
         raise HTTPException(status_code=401, detail="Token has expired")
-    except JWTError:
+    except jwt.PyJWTError:
         raise HTTPException(status_code=401, detail="Invalid authentication credentials")
     return info
 

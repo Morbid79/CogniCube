@@ -3,7 +3,6 @@ from pydantic import SecretStr
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
 from cognicube_backend.config import CONFIG
 
-import traceback
 
 # 邮件服务器配置
 mail_config = ConnectionConfig(
@@ -36,6 +35,5 @@ async def send_verification_email(request:Request, email: str,
     try:
         await fm.send_message(message)
     except Exception as e:
-        traceback.print_exc()
         print(f"Failed to send verification email to {email}: {e}")
     print(f"Verification email sent to {email}.")

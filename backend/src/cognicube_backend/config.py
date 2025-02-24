@@ -11,9 +11,8 @@ class Setting(BaseSettings):
     MAIL_PORT: int = 465
     MAIL_FROM: str
     MAIL_FROM_NAME: str
-    USER_DB_URL: str = "sqlite:///./tests/databases/test_user.db"
+    USER_DB_URL: str = "sqlite:///./tests/databases/test.db"
     JWT_SECRET_KEY: str = "secret"
-    CON_DB_URL: str = "sqlite:///./tests/databases/test_conversation.db"
     AI_API_URL: str
     AI_API_KEY: str
 

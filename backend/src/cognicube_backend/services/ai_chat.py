@@ -1,9 +1,30 @@
 import aiohttp
 from fastapi import HTTPException, status
-from sqlalchemy.orm import Session
 from cognicube_backend.models.conversation import Conversation, Who
+from sqlalchemy.orm import Session
 from cognicube_backend.config import CONFIG
 
+def create_conversation_record(db: Session, user_id: int, user_message: str, ai_reply: str):
+    """创建对话记录"""
+    try:
+        user_message_record = Conversation(
+            user_id=user_id, message=user_message, who=Who.USER
+        )
+        db.add(user_message_record)
+        db.commit()
+        db.refresh(user_message_record)
+
+        ai_message_record = Conversation(
+            user_id=user_id, message=ai_reply, who=Who.AI, reply_to=user_message_record.message_id
+        )
+        db.add(ai_message_record)
+        db.commit()
+        db.refresh(ai_message_record)
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"对话记录保存失败: {str(e)}")
+
+# TODO；修改对话保存到数据库的方法，不要俩个都一起放
 
 async def ai_chat_api(user_message: str) -> str:
     """调用DeepSeek API的函数"""

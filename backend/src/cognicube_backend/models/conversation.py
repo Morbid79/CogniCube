@@ -26,5 +26,5 @@ class Conversation(Base):
         Integer, ForeignKey("conversations.message_id")
     )
     reply: Mapped["Conversation"] = relationship(
-        "conversations", remote_side=[message_id], backref="replies"
+        "Conversation", remote_side=[message_id], backref="replies"
     )

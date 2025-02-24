@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from cognicube_backend.databases.database import get_db
 from cognicube_backend.models.user import User
-from cognicube_backend.services.ai_chat import ai_chat_api
+from cognicube_backend.services.ai_chat import ai_chat_api, create_conversation_record
 from cognicube_backend.utils.jwt_generator import get_jwt_token_user_id
 from cognicube_backend.schemas.conversation import (
     ConversationRequest,
@@ -24,5 +24,5 @@ async def create_conversation(
         raise HTTPException(status_code=404, detail="用户不存在")
 
     ai_response = await ai_chat_api(message.message)
-    # create_conversation_record(db, request.user_id, request.message, ai_response)
+    create_conversation_record(db, user_id, message.message, ai_response)
     return {"reply": ai_response}

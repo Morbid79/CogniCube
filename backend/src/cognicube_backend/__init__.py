@@ -10,9 +10,11 @@ APP = FastAPI()
 
 init_db()
 
+
 @APP.get("/")
 async def root():
     return {"message": "please don't use this endpoint"}
+
 
 APP.include_router(auth)
 APP.include_router(signup)

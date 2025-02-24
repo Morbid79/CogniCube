@@ -11,37 +11,48 @@ from cognicube_backend.models.user import User, create_user
 
 signup = APIRouter(prefix="/apis/v1/auth")
 
+
 @signup.post("/register")
-async def signup_user(request:Request,
-                      user: UserCreate, db: Session = Depends(get_db)):
+async def signup_user(
+    request: Request, user: UserCreate, db: Session = Depends(get_db)
+):
     # 确保用户名和邮箱的唯一性
-    db_user = db.query(User).filter((User.username == user.username) |
-                                    (User.email == user.email)).first()
-    
+    db_user = (
+        db.query(User)
+        .filter((User.username == user.username) | (User.email == user.email))
+        .first()
+    )
+
     # 生成用户验证token，并在5分钟后过期
     verfication_token = str(uuid.uuid4())
     token_expiry = datetime.now(UTC) + timedelta(minutes=5)
-    
-    if  not db_user:
+
+    if not db_user:
         # 创建用户
-        db_user = create_user(db, user.username, user.email,
-                                 user.password,
-                                 verfication_token,
-                                 token_expiry)
+        db_user = create_user(
+            db,
+            user.username,
+            user.email,
+            user.password,
+            verfication_token,
+            token_expiry,
+        )
     else:
         # 如果用户已存在，则更新验证token和过期时间
         if db_user.is_verified:
-            raise HTTPException(status_code=400, detail="User already exists and is verified")
-        
+            raise HTTPException(
+                status_code=400, detail="User already exists and is verified"
+            )
+
         db_user.verification_token = verfication_token
         db_user.verification_token_expiry = token_expiry
         db.commit()
-        
+
     # 发送验证邮件
-    await send_verification_email(request, user.email,
-                                        str(db_user.verification_token))
+    await send_verification_email(request, user.email, str(db_user.verification_token))
 
     return {"user_id": str(db_user.id)}
+
 
 @signup.get("/verify/{token}")
 async def verify_email(token: str, db: Session = Depends(get_db)):
@@ -49,12 +60,16 @@ async def verify_email(token: str, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.verification_token == token).first()
 
     if not db_user:
-        raise HTTPException(status_code=400, detail="Invalid or expired verification token")
-    
+        raise HTTPException(
+            status_code=400, detail="Invalid or expired verification token"
+        )
+
     if db_user.verification_token_expiry is None:
         raise HTTPException(status_code=400, detail="Token expiry time missing")
 
-    token_expiry_with_tz = db_user.verification_token_expiry.replace(tzinfo=timezone.utc)
+    token_expiry_with_tz = db_user.verification_token_expiry.replace(
+        tzinfo=timezone.utc
+    )
 
     # 检查是否已经过期
     if token_expiry_with_tz < datetime.now(UTC):

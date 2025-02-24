@@ -1,8 +1,10 @@
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 
+
 class Setting(BaseSettings):
     """读取环境变量"""
+
     MAIL_USERNAME: str
     MAIL_PASSWORD: str
     MAIL_SERVER: str = "smtp.qq.com"
@@ -11,17 +13,20 @@ class Setting(BaseSettings):
     MAIL_FROM_NAME: str
     USER_DB_URL: str = "sqlite:///./tests/databases/test_user.db"
     JWT_SECRET_KEY: str = "secret"
-    CON_DB_URL: str =  "sqlite:///./tests/databases/test_conversation.db"
+    CON_DB_URL: str = "sqlite:///./tests/databases/test_conversation.db"
     AI_API_URL: str
     AI_API_KEY: str
 
     class Config:
         """读取配置文件"""
+
         env_file = ".env"
+
 
 @lru_cache
 def get_config():
     """返回设置对象，且保证只读取一次"""
-    return Setting() # type: ignore
+    return Setting()  # type: ignore
+
 
 CONFIG = get_config()

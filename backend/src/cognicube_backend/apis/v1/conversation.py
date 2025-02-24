@@ -5,15 +5,19 @@ from cognicube_backend.databases.database import get_db
 from cognicube_backend.models.user import User
 from cognicube_backend.services.ai_chat import ai_chat_api
 from cognicube_backend.utils.jwt_generator import get_jwt_token_user_id
-from cognicube_backend.schemas.conversation import ConversationRequest, ConversationResponse
+from cognicube_backend.schemas.conversation import (
+    ConversationRequest,
+    ConversationResponse,
+)
 
 ai = APIRouter(prefix="/apis/v1/ai")
+
 
 @ai.post("/conversation", response_model=ConversationResponse)
 async def create_conversation(
     message: ConversationRequest,
     user_id: int = Depends(get_jwt_token_user_id),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
@@ -22,4 +26,3 @@ async def create_conversation(
     ai_response = await ai_chat_api(message.message)
     # create_conversation_record(db, request.user_id, request.message, ai_response)
     return {"reply": ai_response}
-

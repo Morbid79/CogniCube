@@ -14,11 +14,11 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 def init_db():
-    """创建用户数据表"""
+    """创建数据表"""
     Base.metadata.create_all(bind=engine)
 
 def get_db():
-    """为当前对话获取用户数据库"""
+    """为当前对话获取数据库"""
     db = SessionLocal()
     try:
         yield db

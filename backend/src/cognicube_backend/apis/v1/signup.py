@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 
 from cognicube_backend.schemas.user import UserCreate
 from cognicube_backend.services.email_service import send_verification_email
-from cognicube_backend.databases.user_database import  get_db
+from cognicube_backend.databases.database import get_db
 from cognicube_backend.models.user import User, create_user
 
 signup = APIRouter(prefix="/apis/v1/auth")

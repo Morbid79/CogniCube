@@ -2,7 +2,7 @@ from datetime import datetime, UTC
 
 from sqlalchemy import  Integer, String, Boolean, DateTime
 from sqlalchemy.orm import Session, mapped_column, Mapped
-from cognicube_backend.databases.user_database import Base
+from cognicube_backend.databases.database import Base
 from werkzeug.security import generate_password_hash, check_password_hash
 
 

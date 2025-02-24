@@ -1,10 +1,9 @@
 import aiohttp
 from fastapi import HTTPException, status
 from cognicube_backend.config import CONFIG
-
 async def ai_chat_api(user_message: str) -> str:
     """调用DeepSeek API的函数"""
-    SESSION = aiohttp.ClientSession()
+    SESSION = aiohttp.ClientSession()# TODO: 优化为单例模式
     try:
         async with SESSION.post(
             CONFIG.AI_API_URL,

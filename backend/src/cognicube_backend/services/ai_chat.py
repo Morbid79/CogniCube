@@ -3,26 +3,35 @@ from fastapi import HTTPException, status
 from cognicube_backend.models.conversation import Conversation, Who
 from sqlalchemy.orm import Session
 from cognicube_backend.config import CONFIG
+from datetime import datetime
 
-def create_conversation_record(db: Session, user_id: int, user_message: str, ai_reply: str):
-    """创建对话记录"""
+async def save_message_record(db: Session, user_id: int, user_message: str, who: str, reply_to: int = None):
+    """简化保存对话记录的过程"""
+    message_record = Conversation(
+        user_id=user_id,
+        message=user_message,  
+        who=who,
+        reply_to=reply_to,
+    )
     try:
-        user_message_record = Conversation(
-            user_id=user_id, message=user_message, who=Who.USER
-        )
-        db.add(user_message_record)
-        db.commit()
-        db.refresh(user_message_record)
-
-        ai_message_record = Conversation(
-            user_id=user_id, message=ai_reply, who=Who.AI, reply_to=user_message_record.message_id
-        )
-        db.add(ai_message_record)
-        db.commit()
-        db.refresh(ai_message_record)
+        db.add(message_record)
+        await db.commit()
+        await db.refresh(message_record)
+        return message_record
     except Exception as e:
-        db.rollback()
+        await db.rollback()
+        raise HTTPException(status_code=500, detail=f"消息保存失败: {str(e)}")
+
+async def create_conversation_record(db: Session, user_id: int, user_message: str, deepseek_function):
+    """创建对话记录，先保存提问，再保存回答"""
+    try:
+        user_message_record = save_message_record(db, user_id, user_message, Who.USER)
+        ai_reply = await ai_chat_api(user_message)
+        await save_message_record(db, user_id, ai_reply, Who.AI, reply_to=user_message_record.message_id)
+    
+    except Exception as e:
         raise HTTPException(status_code=500, detail=f"对话记录保存失败: {str(e)}")
+
 
 # TODO；修改对话保存到数据库的方法，不要俩个都一起放
 
